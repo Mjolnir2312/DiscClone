@@ -1,0 +1,34 @@
+{
+    "Version": 1,
+    "Error": "",
+    "Attribution": "tenjin",
+    "AttributionToken": "",
+    "Platform": "android",
+    "Configuration": [
+        {
+            "Name": "facebook_app_id",
+            "Data": "442405476554634"
+        },
+        {
+            "Name": "facebook_app_name",
+            "Data": "Battle Disc"
+        },
+        {
+            "Name": "admob_app_id",
+            "Data": "ca-app-pub-4802411449673199~9226187630"
+        },
+        {
+            "Name": "gameanalytics_key",
+            "Data": "150d39ac4620b021c2f2b7c5a78ed597"
+        },
+        {
+            "Name": "gameanalytics_secret",
+            "Data": "429a0c4450b5bd2ca76a6a596a6b607a0092c999"
+        },
+        {
+            "Name": "firebase",
+            "Data": "{\n  \"project_info\": {\n    \"project_number\": \"304209516030\",\n    \"firebase_url\": \"https://battle-disc-23000442.firebaseio.com\",\n    \"project_id\": \"battle-disc-23000442\",\n    \"storage_bucket\": \"battle-disc-23000442.appspot.com\"\n  },\n  \"client\": [\n    {\n      \"client_info\": {\n        \"mobilesdk_app_id\": \"1:304209516030:android:94540be02be9565e\",\n        \"android_client_info\": {\n          \"package_name\": \"com.battle.disc\"\n        }\n      },\n      \"oauth_client\": [\n        {\n          \"client_id\": \"304209516030-q4261l10erp2sd15u1atbk5rrsmiqot0.apps.googleusercontent.com\",\n          \"client_type\": 3\n        }\n      ],\n      \"api_key\": [\n        {\n          \"current_key\": \"AIzaSyAiFMSlzLftFI_z5TsrKBChzORzrCWi9sA\"\n        }\n      ],\n      \"services\": {\n        \"appinvite_service\": {\n          \"other_platform_oauth_client\": [\n            {\n              \"client_id\": \"304209516030-q4261l10erp2sd15u1atbk5rrsmiqot0.apps.googleusercontent.com\",\n              \"client_type\": 3\n            }\n          ]\n        }\n      }\n    }\n  ],\n  \"configuration_version\": \"1\"\n}"
+        }
+    ],
+    "Alerts": []
+}
