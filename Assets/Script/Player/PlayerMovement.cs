@@ -8,10 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private GameObject _arrowDirection;
-    [SerializeField] private GameObject _disc;
 
     private ValidateMove _pValidateMove;
-
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpSpeed;
@@ -20,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _animator;
 
+    public AimAndShot aimAndShot { get; set; }
 
     //private PlayerAnimation _playerAnimation = null;
 
@@ -29,19 +28,24 @@ public class PlayerMovement : MonoBehaviour
     public bool isTakeDisc = true;
     public bool isThrow = true;
 
-    private void Start()
+    private void Awake()
     {
         //_playerAnimation = GetComponent<PlayerAnimation>();
         _animator = GetComponent<Animator>();
         _pValidateMove = GetComponent<ValidateMove>();
         _rigidbody = GetComponent<Rigidbody>();
+        aimAndShot = GetComponentInChildren<AimAndShot>();
     }
 
+    private void Start()
+    {
+        aimAndShot.Keep = true;
+    }
     private void FixedUpdate()
     {
+        //Debug.Log(aimAndShot.Keep);
         Move();
         Throw();
-
     }
 
     private void Move()
@@ -60,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("isRunning", false);
         }
-
         _rigidbody.MovePosition(_rigidbody.position + _moveVector);
         _pValidateMove.CheckValidateToMove();
     }
@@ -78,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
                 isTakeDisc = false;
                 isThrow = false;
+                
                 //_animator.SetBool("isKeeping", false);
             }
         }
@@ -107,21 +111,16 @@ public class PlayerMovement : MonoBehaviour
         }    
     }
 
-    private void Shoot()
-    {
-        //new Vector3 = (transform.position - _arrowDirection).
-    }
+    //private void Test()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        _animator.SetBool("isNormal", true);
+    //    }
 
-    private void Test()
-    {
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            _animator.SetBool("isNormal", true);
-        }
-
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            _animator.SetBool("isNormal", false);
-        }
-    }
+    //    if(Input.GetKeyDown(KeyCode.P))
+    //    {
+    //        _animator.SetBool("isNormal", false);
+    //    }
+    //}
 }

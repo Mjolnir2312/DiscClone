@@ -4,29 +4,40 @@ using UnityEngine;
 
 public class AimAndShot : MonoBehaviour
 {
-    public GameObject _puck;
-    //private Camera _mainCam;
-    //private Vector3 _mousePos;
-    // Start is called before the first frame update
+    [SerializeField] GameObject localArmPos;
+    [SerializeField] GameObject _puck;
+
+    public bool Keep = true;
+
     void Start()
     {
-        //Debug.Log(transform.position);
+       
+        //Debug.Log(_playerMovement.isTakeDisc);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = _puck.transform.position;
+        //Debug.Log(_playerMovement.isTakeDisc);
+        Aim();
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetMouseButtonUp(0))
         {
-            transform.position = new Vector3(9e-07f, 1.11e-05f, -1.6e-06f);
+            ResetAim();
         }
-
     }
 
-    void Aim()
+    public void Aim()
     {
+        if(Keep == true)
+        {
+            transform.position = _puck.transform.position;
+        }
+    }
 
+    public void ResetAim()
+    {
+        Keep = false;
+        transform.position = localArmPos.transform.position;
     }
 }

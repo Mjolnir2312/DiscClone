@@ -6,9 +6,7 @@ public class Throwing : MonoBehaviour
 {
     public Transform target;
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private LineRenderer _linePlayer;
     [SerializeField] private Transform _behindP;
-    [SerializeField] private float _length;
     private float _force;
 
     public bool isThrowing;
