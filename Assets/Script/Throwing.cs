@@ -7,6 +7,9 @@ public class Throwing : MonoBehaviour
     public Transform target;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Transform _behindP;
+
+    [SerializeField] GameObject _rightArmPos;
+    [SerializeField] Transform _armPos;
     private float _force;
 
     public bool isThrowing;
@@ -36,6 +39,7 @@ public class Throwing : MonoBehaviour
     {
         if (isThrowing == false)
         {
+            _rightArmPos.transform.position = transform.position;
             if (Input.GetMouseButtonUp(0))
             {
                 Shoot();
@@ -51,6 +55,7 @@ public class Throwing : MonoBehaviour
         _rigidbody.velocity = _force * Time.fixedDeltaTime * target.transform.forward;
         isThrowing = true;
         //_linePlayer.gameObject.SetActive(false);
+        _rightArmPos.transform.position = _armPos.position;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -60,11 +65,22 @@ public class Throwing : MonoBehaviour
             _rigidbody.velocity = Vector3.zero;
             ChangePos();
             isThrowing = false;
+            //_rightArmPos.transform.position = transform.position;
         }
     }
 
     private void ChangePos()
     {
         transform.position = new Vector3(_behindP.position.x, -0.01639806f, _behindP.position.z);
+    }
+
+    private void ConnectRightArm()
+    {
+        if(isThrowing == false)
+        {
+            _rightArmPos.transform.position = transform.position;
+        }
+        else
+            _rightArmPos.transform.position = _armPos.position;
     }
 }

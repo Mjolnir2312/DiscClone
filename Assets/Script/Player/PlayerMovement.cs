@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _animator;
 
-    public AimAndShot aimAndShot { get; set; }
+    //public AimAndShot aimAndShot { get; set; }
 
     //private PlayerAnimation _playerAnimation = null;
 
@@ -34,12 +34,12 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponent<Animator>();
         _pValidateMove = GetComponent<ValidateMove>();
         _rigidbody = GetComponent<Rigidbody>();
-        aimAndShot = GetComponentInChildren<AimAndShot>();
+        //aimAndShot = GetComponentInChildren<AimAndShot>();
     }
 
     private void Start()
     {
-        aimAndShot.Keep = true;
+        //aimAndShot.Keep = true;
     }
     private void FixedUpdate()
     {
@@ -78,10 +78,9 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
                 _animator.SetBool("isFlaling", true);
                 _animator.SetBool("isThrowing", true);
-
                 isTakeDisc = false;
                 isThrow = false;
-                
+                //aimAndShot.ResetAim();
                 //_animator.SetBool("isKeeping", false);
             }
         }
@@ -108,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
             isThrow = true;
             _animator.SetBool("isNormal", false);
             //_animator.SetBool("isKeeping", true);
+            //aimAndShot.Aim();
         }    
     }
 

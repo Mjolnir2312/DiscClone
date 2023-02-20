@@ -27588,7 +27588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _limitX: -2.3
   _maxX: 2.5
-  _limitZ: -5
+  _limitZ: -3
   _maxZ: 3
 --- !u!54 &919132149061650404
 Rigidbody:
