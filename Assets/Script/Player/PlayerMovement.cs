@@ -8,21 +8,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private GameObject _arrowDirection;
-
-    private ValidateMove _pValidateMove;
-
+    [SerializeField] private GameObject _disc;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpSpeed;
     [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float _roSpeed;
 
 
     private Animator _animator;
-
-    //public AimAndShot aimAndShot { get; set; }
-
-    //private PlayerAnimation _playerAnimation = null;
-
     private Vector3 _moveVector;
+    private ValidateMove _pValidateMove;
 
     public Transform target;
     public bool isTakeDisc = true;
@@ -30,25 +25,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        //_playerAnimation = GetComponent<PlayerAnimation>();
         _animator = GetComponent<Animator>();
         _pValidateMove = GetComponent<ValidateMove>();
         _rigidbody = GetComponent<Rigidbody>();
-        //aimAndShot = GetComponentInChildren<AimAndShot>();
     }
-
-    private void Start()
+    private void Update()
     {
-        //aimAndShot.Keep = true;
-    }
-    private void FixedUpdate()
-    {
-        //Debug.Log(aimAndShot.Keep);
-        Move();
         Throw();
     }
 
-    private void Move()
+    private void MoveWithoutDisc()
     {
         _moveVector = Vector3.zero;
         _moveVector.x = _joystick.Horizontal * _moveSpeed * Time.deltaTime;
@@ -64,30 +50,45 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("isRunning", false);
         }
+
         _rigidbody.MovePosition(_rigidbody.position + _moveVector);
         _pValidateMove.CheckValidateToMove();
+    }
+
+    private void MoveWithDisc()
+    {
+        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+        {
+            transform.RotateAround(_disc.transform.position, Vector3.up, _joystick.Horizontal * _roSpeed * Time.deltaTime);
+            
+            transform.position += transform.forward * _joystick.Vertical * _moveSpeed * Time.deltaTime;
+
+            _animator.SetBool("isRunning", true);
+        }
+        else
+            _animator.SetBool("isRunning", false);
+
+        _pValidateMove.CheckRotate();
+
     }
 
     private void Throw()
     {
         if(isThrow == true && isTakeDisc == true)
         {
+            MoveWithDisc();
             if (Input.GetMouseButtonUp(0))
             {
                 _arrowDirection.SetActive(true);
                 Jump();
-                _animator.SetBool("isFlaling", true);
                 _animator.SetBool("isThrowing", true);
                 isTakeDisc = false;
                 isThrow = false;
-                //aimAndShot.ResetAim();
-                //_animator.SetBool("isKeeping", false);
             }
         }
         else
         {
-            _animator.SetBool("isNormal", true);
-            _animator.SetBool("isFlaling", false);
+            MoveWithoutDisc();
             _arrowDirection.SetActive(false);
             _animator.SetBool("isThrowing", false);
         }
@@ -105,22 +106,6 @@ public class PlayerMovement : MonoBehaviour
             _arrowDirection.SetActive(true); 
             isTakeDisc = true;
             isThrow = true;
-            _animator.SetBool("isNormal", false);
-            //_animator.SetBool("isKeeping", true);
-            //aimAndShot.Aim();
         }    
     }
-
-    //private void Test()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        _animator.SetBool("isNormal", true);
-    //    }
-
-    //    if(Input.GetKeyDown(KeyCode.P))
-    //    {
-    //        _animator.SetBool("isNormal", false);
-    //    }
-    //}
 }

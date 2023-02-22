@@ -6,6 +6,7 @@ public class AimAndShot : MonoBehaviour
 {
     [SerializeField] GameObject localArmPos;
     [SerializeField] GameObject _puck;
+    [SerializeField] float _speed;
 
     public bool Keep = true;
 
@@ -19,25 +20,20 @@ public class AimAndShot : MonoBehaviour
     void Update()
     {
         //Debug.Log(_playerMovement.isTakeDisc);
-        Aim();
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            ResetAim();
-        }
+       //Aim();
     }
 
     public void Aim()
     {
-        if(Keep == true)
-        {
-            transform.position = _puck.transform.position;
-        }
+        //transform.position = _puck.transform.position;
+        //transform.forward = transform.parent.right;
     }
 
-    public void ResetAim()
-    {
-        Keep = false;
-        transform.position = localArmPos.transform.position;
-    }
+    //public void ResetAim()
+    //{
+    //    //Keep = false;
+    //    transform.position = localArmPos.transform.position;
+    //    Debug.Log("Reset");
+    //}
 }

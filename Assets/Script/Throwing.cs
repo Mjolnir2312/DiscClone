@@ -4,83 +4,96 @@ using UnityEngine;
 
 public class Throwing : MonoBehaviour
 {
-    public Transform target;
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private Transform _behindP;
-
+    [SerializeField] private GameObject _behindP;
+    [SerializeField] private float _speed;
     [SerializeField] GameObject _rightArmPos;
-    [SerializeField] Transform _armPos;
-    private float _force;
+    [SerializeField] GameObject _armPos;
+    [SerializeField] GameObject _player;
+    [SerializeField] private float _force;
 
-    public bool isThrowing;
+    public Transform target;
+    public bool isThrowing = false;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
-    //private void Update()
-    //{
-    //    if(Input.GetMouseButtonUp(0))
-    //    {
-    //        Shoot();
-    //    }
-    //}
 
-    private void FixedUpdate()
+    private void Start()
+    {
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    private void Update()
     {
         ValidateThrow();
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Shoot();
-        //}
     }
 
     public void ValidateThrow()
     {
         if (isThrowing == false)
         {
-            _rightArmPos.transform.position = transform.position;
+            LongArm();
             if (Input.GetMouseButtonUp(0))
             {
-                Shoot();
+                StartCoroutine(UnFreezeBody());
             }
         }
+        //ResetArm();
     }
 
     void Shoot()
     {
-        _force = 650;
-        //Vector3 Shoot = (target.position * _force + transform.forward).normalized;
-        //_rigidbody.AddForce(Shoot, ForceMode.Impulse);
+        //_force = 650;
         _rigidbody.velocity = _force * Time.fixedDeltaTime * target.transform.forward;
         isThrowing = true;
-        //_linePlayer.gameObject.SetActive(false);
-        _rightArmPos.transform.position = _armPos.position;
+        //StartCoroutine(UnFreezeBody());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
        if(collision.gameObject.tag == "Player")
         {
-            _rigidbody.velocity = Vector3.zero;
+            //_rigidbody.velocity = Vector3.zero;
+            //transform.position = new Vector3(_behindPMore.transform.position.x, -0.0164f, _behindPMore.transform.position.z);
+            //Physics.IgnoreCollision(GetComponent<Collider>(), _player.GetComponent<Collider>());
             ChangePos();
-            isThrowing = false;
             //_rightArmPos.transform.position = transform.position;
+            isThrowing = false;
         }
     }
 
     private void ChangePos()
     {
-        transform.position = new Vector3(_behindP.position.x, -0.01639806f, _behindP.position.z);
+        //Physics.IgnoreCollision(GetComponent<Collider>(), _player.GetComponent<Collider>());
+
+        Vector3 disPos = new Vector3(_behindP.transform.position.x, -0.0164f, _behindP.transform.position.z);
+        if(isThrowing == true)
+        {
+            //transform.position = Vector3.MoveTowards(transform.position, disPos, _speed * Time.deltaTime);
+            transform.position = disPos;
+            _rigidbody.velocity = Vector3.zero;
+        }
+
+        StartCoroutine(FreezeBody());
     }
 
-    private void ConnectRightArm()
+    private void LongArm()
     {
-        if(isThrowing == false)
-        {
-            _rightArmPos.transform.position = transform.position;
-        }
-        else
-            _rightArmPos.transform.position = _armPos.position;
+        _rightArmPos.transform.position = transform.position;
+    }
+
+    IEnumerator FreezeBody()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _rigidbody.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+    }
+
+    IEnumerator UnFreezeBody()
+    {
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        yield return new WaitForSeconds(0f);
+        Shoot();
     }
 }

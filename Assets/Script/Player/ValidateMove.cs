@@ -4,53 +4,50 @@ using UnityEngine;
 
 public class ValidateMove : MonoBehaviour
 {
-    [SerializeField] private float _limitX;
-    [SerializeField] private float _maxX;
-    [SerializeField] private float _limitZ;
-    [SerializeField] private float _maxZ;
+    [SerializeField] private float _limit;
+    [SerializeField] private float _rotationSpeed = 5;
 
-    private float _rotateY = 0.8f;
+    //private float _rotateY = 0.8f;
+    private Vector2 _direction = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CheckValidateToMove()
     {
-        if (transform.position.x < _limitX)
-        {
-            transform.position = new Vector3(_limitX, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.x > _maxX)
-        {
-            transform.position = new Vector3(_maxX, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.z < _limitZ)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, _limitZ);
-        }
-        else if (transform.position.z > _maxZ)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, _maxZ);
-        }
+        Vector3 clampPosition = transform.position;
+        clampPosition.x = Mathf.Clamp(clampPosition.x, -_limit, _limit);
+        clampPosition.z = Mathf.Clamp(clampPosition.z, -_limit, _limit);
+        transform.position = clampPosition;
 
+        var currentRotation = transform.rotation;
+        var targetRotation = Quaternion.Euler(new Vector3(0, Mathf.Atan2(_direction.x, _direction.y) * 360 / Mathf.PI, 0));
+        transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, Time.deltaTime * _rotationSpeed);
+    }
 
-        //Quaternion
-        if (transform.rotation.y < -_rotateY)
-        {
-            transform.rotation = Quaternion.Euler(0, -80, 0);
-        }
-        else if (transform.rotation.y > _rotateY)
-        {
-            transform.rotation = Quaternion.Euler(0, 80, 0);
-        }
+    public void CheckRotate()
+    {
+        Vector3 clampPosition = transform.position;
+        clampPosition.x = Mathf.Clamp(clampPosition.x, -_limit, _limit);
+        clampPosition.z = Mathf.Clamp(clampPosition.z, -_limit, _limit);
+        transform.position = clampPosition;
+
+        //if (transform.rotation.y < -_rotateY)
+        //{
+        //    transform.rotation = Quaternion.Euler(0, -90, 0);
+        //}
+        //else if (transform.rotation.y > _rotateY)
+        //{
+        //    transform.rotation = Quaternion.Euler(0, 90, 0);
+        //}
     }
 }

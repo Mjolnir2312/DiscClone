@@ -38,16 +38,4 @@ public class Bounce : MonoBehaviour
             _rigidbody.velocity = direction * Mathf.Max(speed, 0f);
         }
     }
-
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if(hit.gameObject.CompareTag("Obstacle") /*|| hit.gameObject.CompareTag("Wall")*/)
-    //    {
-    //        Debug.Log("haha");
-    //        var speed = lastVelocity.magnitude;
-    //        var direction = Vector3.Reflect(lastVelocity.normalized, hit.normal);
-
-    //        _rigidbody.velocity = direction * Mathf.Max(speed, 0f);
-    //    }
-    //}
 }
