@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Break : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _breakParticleSystem;
+    public ParticleSystem _breakParticleSystem;
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _breakSound;
@@ -19,7 +19,10 @@ public class Break : MonoBehaviour
     {
         if(collision.gameObject.tag == "Disc")
         {
-            StartCoroutine(BreakObstacle());
+            //StartCoroutine(BreakObstacle());
+            Instantiate(_breakParticleSystem.gameObject, transform.position, transform.rotation);
+            Destroy(gameObject);
+            _audioSource.PlayOneShot(_breakSound);
         }
     }
 
